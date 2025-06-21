@@ -15,12 +15,11 @@
 #define SCREEN_ADDRESS 0x3C ///< See datasheet for Address; 0x3D for 128x64, 0x3C for 128x32
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 
-const char* ssid = "Ethernet"; // Students
-const char* password = "78949379"; // sedniuchi
+const char* ssid = "Network name";
+const char* password = "network password";
 
-const char* mqtt_server = "185.138.177.188";
-//const char* mqtt_server = "192.168.3.44";
-const unsigned int mqtt_port = 1888;
+const char* mqtt_server = "mqtt broker ip";
+const unsigned int mqtt_port = 1888; // mqtt broker port
 
 char buf[10];
 
@@ -46,8 +45,6 @@ void OLEDSetup() {
     Serial.println(F("SSD1306 allocation failed"));
     for(;;); // Don't proceed, loop forever
   }
-  // init done
-  // Clear the buffer.
   WriteConsole("Welcome!", 2);
 }
 
@@ -122,7 +119,7 @@ void callback(char* topic, byte* payload, unsigned int length) {
     return;
   }
 
-  // Switch on the LED if an BLUE_ON was received as message
+  // Switch the LED if an (LEDCOLOR)_TOGGLE was received as message
   if (message == "BLUE_TOGGLE") {
     toggleLed(BLUE_LED);
   }
